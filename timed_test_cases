@@ -1,0 +1,105 @@
+#!/usr/bin/env python
+'''
+********  BSKYB **********************
+********  Waqas Ahmed ****************
+********  Sky Go reBuffering test cases ******
+**************************************
+'''
+import time
+import os
+import datetime
+
+TimeDelay = 20 #seconds
+
+HighThroughput = 10240 # 10Mbps
+MediumThroughput = 2048 #2MPBS
+LowThroughput = 1024 #Mbps
+VeryLowThroughput = 512 #Mbps
+VeryVeryLowThroughput = 256 #Mbps
+
+def setThroughput(throughput, sleep_cycle):
+	print "Bandwidth changed to " + str(throughput)+'kbps'+' for '+str(sleep_cycle)+'sec'
+	impareString = "sudo sh impare.sh 0 0 0 0 0 0 0 0 0 0 0 0 "+str(throughput)+'kbit '+str(throughput)+'kbit'
+	#print impareString
+	os.system (impareString)
+	time.sleep(sleep_cycle)
+
+
+def setPacketLoss(percentage, sleep_cycle):
+	print str(percentage)+"% of packets will be discarded for "+str(sleep_cycle)+'sec(s) - on the downlink'
+	impareString = "sudo sh impare.sh 0 0 0 0 0 0 0 0 "+str(percentage)+" 0 0 0 102400kbit 102400kbit"
+	#print impareString
+	#sudo sh impare.sh 0 0 0 0 0 0 0 0 20 0 0 0 102400kbit 102400kbit
+	os.system (impareString)
+	time.sleep(sleep_cycle)
+
+
+def setRokuBufferTest(throughput, sleep_cycle):
+	print "Network Crunch activated for "+str(sleep_cycle)+'sec(s)'+' downLinkRate ' + str(throughput)
+	impareString = "sudo sh impare.sh 5 15 10 0 5 5 5 20 10 0 5 5 "+str(throughput)+'kbit '+str(throughput)+'kbit'
+	#print impareString
+	#sudo sh impare.sh 5 15 10 0 5 5 5 20 10 0 5 5 10240kbit 20480kbit
+	os.system (impareString)
+	time.sleep(sleep_cycle)
+
+def throughputTestCase():
+	setThroughput(MediumThroughput,TimeDelay)	
+	setThroughput(LowThroughput,TimeDelay)
+	setThroughput(VeryLowThroughput,TimeDelay)
+	setThroughput(VeryVeryLowThroughput,TimeDelay)
+	setThroughput(HighThroughput,0)	
+
+
+def bandwidthTestCase():
+	setPacketLoss(50,60) #10% of packets lost for 60 secs
+	setPacketLoss(0,0)
+
+def RokuTests(bitrate):
+	#setRokuBufferTest(bitrate,TimeDelay) #secs
+	setThroughput(bitrate,TimeDelay)	
+
+def main():
+	print "Impairment test Scripts"
+	#throughputTestCase()
+	#bandwidthTestCase()
+	print "Test Startd at " + str(datetime.datetime.now())
+	for m in range(0,5):
+		print "Roku Test - Rebuffer event No. " + str(m)
+		RokuTests(5000 - (m * 1000))
+	print "Test Ended at " + str(datetime.datetime.now())
+	
+
+#************************************************************************#
+#************************************************************************#
+if __name__=="__main__":
+	main()
+
+'''
+######Parameters########
+-delayTx
+-jitterTx
+-lossTx
+-duplicateTx
+-corruptionTx
+-reorderTx
+-delayRx
+-jitterRx
+-lossRx
+-duplicateRx
+-corruptionRx
+-reorderRx
+-upLinkRate.'kbit
+-downLinkRate.'kbit
+'''
+
+#"sudo sh impare.sh '0' '0' '0' '0' '0' '0' '0' '0' '0' '0' '0' '0' '100kbit' '200kbit';" 
+#impare.sh 0 0 0 0 0 0 0 0 0 0 0 0 100kbit 200kbit
+#sudo sh impare.sh 0 0 0 0 0 0 0 0 0 0 0 0 9048kbit 9048kbit'
+
+'''
+Throughput changed to 10240kbps for 30sec
+Throughput changed to 1024kbps for 30sec
+Throughput changed to 128kbps for 30sec
+Throughput changed to 10240kbps for 30sec
+[Finished in 120.2s]
+'''
