@@ -7,8 +7,8 @@ ORIGINAL_PATH=$PATH
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/game"
 
 #echo $PATH	
-CTOSINTERFACE=eth1	# EGRESS interface on Bridge, facing the SERVER
-STOCINTERFACE=eth0	# EGGRES interface on Bridge, facing the CLIENT
+CTOSINTERFACE=ens33	# EGRESS interface on Bridge, facing the SERVER
+STOCINTERFACE=ens38	# EGGRES interface on Bridge, facing the CLIENT
 
 # Client To Server
 CDELAY=$1	

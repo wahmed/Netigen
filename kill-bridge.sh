@@ -20,4 +20,5 @@ brctl delbr br0
 
 
 #show bridge
-brctl show
+#brctl show
+brctl showstp br0
