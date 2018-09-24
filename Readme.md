@@ -1,1 +1,1 @@
-Vodafone Research - Network Impairment Generator
+Video Delivery Research - Network Impairment Generator
