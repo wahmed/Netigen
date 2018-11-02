@@ -13,7 +13,7 @@ error {color:red;}
 <html>
 <head>	
 	<body background="./images/background3.jpg">
-<title>Sky Research, Network Impairment Generator</title>
+<title>Network Impairment Generator</title>
 <meta charset="UTF-16">
 <script src="stopwatch.js"></script>
 <body onload="show();">
@@ -97,18 +97,42 @@ $brctl=shell_exec('sudo sh brctl show');
 echo $brctl;
 */
 
+
+$small_init_delta = 0.001;
+
+#initialize the values with a small number to fix disq bug of not taking zero(0) values on Ubuntu 18?
+$lossRx = $lossRx+$small_init_delta;
+$duplicateRx = $duplicateRx+$small_init_delta;
+$corruptionRx = $corruptionRx+$small_init_delta;
+$reorderRx = $reorderRx+$small_init_delta;
+$delayRx = $delayRx+$small_init_delta;
+
+
+$lossTx = $lossTx+$small_init_delta;
+$duplicateTx = $duplicateTx+$small_init_delta;
+$corruptionTx = $corruptionTx+$small_init_delta;
+$reorderTx = $reorderTx+$small_init_delta;
+$delayTx = $delayTx+$small_init_delta;
+
 //Mbit to Kbit conversion
 $downLinkRate = $downLinkRate * 1024;
 $upLinkRate = $upLinkRate * 1024;
+
+
  
 echo "<br>";
 $commandString =  'sudo sh impare.sh '.$delayTx.' '.$jitterTx.' '.$lossTx.' '.$duplicateTx.' '.$corruptionTx.' '.$reorderTx.' '.$delayRx.' '.$jitterRx.' '.$lossRx.' '.$duplicateRx.' '.$corruptionRx.' '.$reorderRx. ' '.$downLinkRate.'kbit'.' '.$upLinkRate.'kbit'; 
 #echo $commandString;
 echo "<br>";
+echo "<br>";
+#echo $commandString;
+echo "<br>";
+echo "<br>";
 
 #$theImpairmenentGen  = shell_exec('./impare.sh '.$delayTx.' '.$jitterTx.' '.$lossTx.' '.$duplicateTx.' '.$corruptionTx.' '.$reorderTx); downLinkRate
 $theImpairmenentGen  = shell_exec($commandString);
 echo $theImpairmenentGen;
+
 }
 
 startImpairmentGenerator(
