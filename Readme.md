@@ -1,4 +1,4 @@
-**Video Quality of Experience - Benchmark video delivery over Internet
+Video QoE (Quality of Experience) - Benchmark Your video App agaisnt (Netflix) in difficult network conditions
 
 **Tool Explanation
 This tools is designed to benchmark OTT Video delivery Apps, and has two components. 
